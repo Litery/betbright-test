@@ -1,0 +1,2 @@
+injector==0.15.0
+aiomysql==0.0.20
