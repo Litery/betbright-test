@@ -1,4 +1,4 @@
-#Solution to the test supplied during recruitment process
+# Solution to the test supplied during recruitment process
 
 ### Setup
 To run the cli tool
