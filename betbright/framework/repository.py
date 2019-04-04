@@ -52,4 +52,5 @@ class BaseRepository:
             yield self.serializer.load(key.decode('utf-8'))
 
     async def update(self, entity):
-        pass
+        await self.delete(entity)
+        await self.add(entity)
