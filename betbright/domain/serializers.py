@@ -13,6 +13,12 @@ class DataclassSerializer:
         return ':'.join(map(str, data))
 
     def load(self, data):
-        values = data.split(':')[1:]
+        values = str(data).split(':')[1:]
         types = self.model.__annotations__.values()
         return self.model(*[self._cast(_type, value) for _type, value in zip(types, values)])
+
+    def build_filter(self, **kwargs):
+        pattern = [self.model.__name__]
+        for key in self.model.__annotations__.keys():
+            pattern.append(kwargs.get(key, '*'))
+        return ':'.join(pattern)
