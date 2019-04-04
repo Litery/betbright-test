@@ -1,0 +1,18 @@
+version: "3.7"
+services:
+  tests:
+    build:
+      dockerfile: ./Dockerfile
+      context: .
+    entrypoint: /bin/sh -c
+    command:
+      - |
+        /wait
+        ./run_tests.sh
+    environment:
+      REDIS_URL: redis://redis
+      WAIT_HOSTS: redis:6379
+      WAIT_SLEEP_INTERVAL: 1
+
+  redis:
+    image: redis
