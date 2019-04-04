@@ -6,6 +6,7 @@ from betbright.domain.entities import Sport, Event, Market, Selection, EventType
 
 class CommonScenario:
     def __init__(self):
+        self.result = None
         self.sport: Sport = None
         self.sports: List[Sport] = []
         self.event: Event = None
@@ -21,8 +22,8 @@ class CommonScenario:
         setattr(self, name, instance)
         setattr(self, f'{name}s', getattr(self, f'{name}s') + [instance])
 
-    def given_a_sport(self, name: str, _id: int = None):
-        args = _id, name, name.title(), name.replace(' ', ''), 0
+    def given_a_sport(self, name: str, _id: int = None, order=0):
+        args = _id, name, name.title(), name.replace(' ', ''), order
         self._create_entity(Sport, *args)
         return self
 
@@ -43,4 +44,8 @@ class CommonScenario:
         args = (_id, name, event or self.event, market or self.market, price, order, active,
                 schema, columns)
         self._create_entity(Selection, *args)
+        return self
+
+    def result_should_equal_to(self, expected):
+        assert expected == self.result
         return self
