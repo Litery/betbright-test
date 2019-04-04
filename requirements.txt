@@ -1,2 +1,2 @@
 injector==0.15.0
-aiomysql==0.0.20
+aioredis==1.2.0
