@@ -17,8 +17,15 @@ class DataclassSerializer:
         types = self.model.__annotations__.values()
         return self.model(*[self._cast(_type, value) for _type, value in zip(types, values)])
 
+    def from_kwargs(self, **kwargs):
+        for attr, _type in self.model.__annotations__.items():
+            if kwargs[attr]:
+                kwargs[attr] = self._cast(_type, kwargs[attr])
+        return self.model(**kwargs)
+
     def build_filter(self, **kwargs):
         pattern = [self.model.__name__]
+        kwargs = {k: v for k, v in kwargs.items() if v is not None}
         for key in self.model.__annotations__.keys():
             pattern.append(str(kwargs.get(key, '*')))
         return ':'.join(pattern)
