@@ -7,6 +7,7 @@ from betbright.domain.entities import Sport, Event, Market, Selection, EventType
 class CommonScenario:
     def __init__(self):
         self.result = None
+        self.results = []
         self.sport: Sport = None
         self.sports: List[Sport] = []
         self.event: Event = None
@@ -15,12 +16,19 @@ class CommonScenario:
         self.markets: List[Market] = []
         self.selection: Selection = None
         self.selections: List[Selection] = []
+        self.entities = {
+            Sport: self.sports,
+            Event: self.events,
+            Market: self.markets,
+            Selection: self.selections
+        }
 
     def _create_entity(self, cls, *args, **kwargs):
         instance = cls(*args, **kwargs)
         name = cls.__name__.lower()
         setattr(self, name, instance)
-        setattr(self, f'{name}s', getattr(self, f'{name}s') + [instance])
+        _list = getattr(self, f'{name}s')
+        _list.append(instance)
 
     def given_a_sport(self, name: str, _id: int = None, order=0):
         args = _id, name, name.title(), name.replace(' ', ''), order
