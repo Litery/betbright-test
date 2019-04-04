@@ -69,6 +69,18 @@ class SportRepoTestCase(ConnectionTestCase):
         await scenario.when_i_populate_db_with_data()
         await scenario.then_the_number_of_sports_should_be(3)
 
+    async def test_delete_multiple_sports(self):
+        scenario = self.scenario
+        scenario \
+            .given_a_sport('sport 1') \
+            .given_a_sport('sport 2') \
+            .given_a_sport('sport 3')
+
+        await scenario.when_i_populate_db_with_data()
+        await scenario.then_the_number_of_sports_should_be(3)
+        await scenario.when_i_delete_sports(scenario.sports[:2])
+        await scenario.then_the_number_of_sports_should_be(1)
+
     class Scenario(CommonScenario):
         def __init__(self):
             super().__init__()
@@ -81,7 +93,11 @@ class SportRepoTestCase(ConnectionTestCase):
                 await repo.add(*entity_list)
 
         async def then_the_number_of_sports_should_be(self, n):
+            self.results = []
             async for sport in self.repository.get():
                 self.results.append(sport)
+            print(self.results)
+            assert len(self.results) == n
 
-            assert n == len(self.results)
+        async def when_i_delete_sports(self, sports):
+            await self.repository.delete(*sports)

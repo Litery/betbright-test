@@ -38,20 +38,18 @@ class BaseRepository:
         if args:
             await self.connection.mset(args[0], args[1], *args[2:])
 
-    async def scan(self, pattern):
-        cur = b'0'
-        while cur:
-            cur, keys = await self.connection.scan(cur, match=pattern)
-            yield keys
-
-    async def delete(self, entity):
-        pass
+    async def delete(self, *entities):
+        ids = [entity.id for entity in entities]
+        matching = []
+        for id in ids:
+            async for key in self.connection.iscan(match=self.serializer.build_filter(id=id)):
+                matching.append(key)
+        await self.connection.unlink(matching[0], *matching[1:])
 
     async def get(self, **kwargs):
         pattern = self.serializer.build_filter(**kwargs)
-        async for keys in self.scan(pattern):
-            for data in keys:
-                yield self.serializer.load(data.decode('utf-8'))
+        async for key in self.connection.iscan(match=pattern):
+            yield self.serializer.load(key.decode('utf-8'))
 
     async def update(self, entity):
         pass

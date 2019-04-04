@@ -20,5 +20,5 @@ class DataclassSerializer:
     def build_filter(self, **kwargs):
         pattern = [self.model.__name__]
         for key in self.model.__annotations__.keys():
-            pattern.append(kwargs.get(key, '*'))
+            pattern.append(str(kwargs.get(key, '*')))
         return ':'.join(pattern)
