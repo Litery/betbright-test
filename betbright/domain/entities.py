@@ -25,16 +25,17 @@ class StatusType(Enum):
 
 @dataclass
 class Event:
+    id: int
     name: str
     event_type: EventType
     sport: Sport
     status: StatusType
     slug: str
-    active: bool = True
 
 
 @dataclass
 class Market:
+    id: int
     name: str
     display_name: str
     order: int
@@ -44,6 +45,7 @@ class Market:
 
 @dataclass
 class Selection:
+    id: int
     name: str
     event: Event
     market: Market
