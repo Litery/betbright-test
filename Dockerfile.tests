@@ -5,6 +5,7 @@ ENV PYTHONUNBUFFERED 1
 RUN mkdir /code
 WORKDIR /code
 
+ADD requirements.txt /code/
 ADD requirements-tests.txt /code/
 RUN pip install -r requirements-tests.txt
 ADD . /code/

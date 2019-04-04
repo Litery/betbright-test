@@ -2,7 +2,7 @@ version: "3.7"
 services:
   tests:
     build:
-      dockerfile: ./Dockerfile
+      dockerfile: ./Dockerfile.tests
       context: .
     entrypoint: /bin/sh -c
     command:
