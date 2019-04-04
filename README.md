@@ -6,6 +6,10 @@ To run the cli tool
 
 > docker-compose up
 
+> docker-compose exec app /bin/bash
+
+> ./run_app.sh
+
 To run tests
 
 > docker-compose -c docker-compose-tests.yml build

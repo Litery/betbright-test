@@ -8,11 +8,12 @@ services:
     command:
       - |
         /wait
-        ./run_app.sh
+        tail -f /dev/null
     environment:
       REDIS_URL: redis://redis
       WAIT_HOSTS: redis:6379
       WAIT_SLEEP_INTERVAL: 1
+      PYTHONPATH: .
 
   redis:
     image: redis
