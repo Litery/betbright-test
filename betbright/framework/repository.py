@@ -44,7 +44,8 @@ class BaseRepository:
         for id in ids:
             async for key in self.connection.iscan(match=self.serializer.build_filter(id=id)):
                 matching.append(key)
-        await self.connection.unlink(matching[0], *matching[1:])
+        if matching:
+            await self.connection.unlink(matching[0], *matching[1:])
 
     async def get(self, **kwargs):
         pattern = self.serializer.build_filter(**kwargs)
