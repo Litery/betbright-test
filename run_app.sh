@@ -1,2 +1,6 @@
 #!/usr/bin/env bash
-python betbright/application/cli.py "$@"
+while true; do
+    printf "$ ";
+    read var;
+    python betbright/application/cli.py $var;
+done
