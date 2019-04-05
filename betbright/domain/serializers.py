@@ -1,3 +1,8 @@
+import decimal
+
+from betbright.domain.entities import StatusType, EventType
+
+
 class DataclassSerializer:
     def __init__(self, model):
         self.model = model
@@ -19,7 +24,7 @@ class DataclassSerializer:
 
     def from_kwargs(self, **kwargs):
         for attr, _type in self.model.__annotations__.items():
-            if kwargs[attr]:
+            if kwargs[attr] and _type in (int, str, bytes, decimal.Decimal, StatusType, EventType):
                 kwargs[attr] = self._cast(_type, kwargs[attr])
         return self.model(**kwargs)
 
