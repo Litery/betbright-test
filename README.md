@@ -1,5 +1,26 @@
 # Solution to the test supplied during recruitment process
 
+
+Write simple command-line application demonstrating the following functionalities:
+
+- Creating sports, events, markets or selections
+
+- Searching for sports, events, markets, or selections
+
+- The system should be able to combine N filters with an AND expression 
+
+- Filters may be more or less complex
+
+- Updating sports, events, markets or selections 
+
+- Deleting sports, events, markets, or selections
+
+Restrictions:
+
+- No ORM usage
+
+- Data persistently stored
+
 ### Setup
 #### To run the cli tool
 > docker-compose build
